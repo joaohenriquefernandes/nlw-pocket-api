@@ -6,6 +6,7 @@ import {
 } from 'fastify-type-provider-zod'
 import z from 'zod'
 import { createGoal } from '../functions/create-goal'
+import { getWeekPendingGoals } from '../functions/get-week-pending-goals'
 
 export const app = fastify()
 
@@ -28,5 +29,15 @@ app.withTypeProvider<ZodTypeProvider>().route({
       title,
       desiredWeeklyFrequency,
     })
+  },
+})
+
+app.withTypeProvider<ZodTypeProvider>().route({
+  method: 'GET',
+  url: '/pending-goals',
+  handler: async (request, reply) => {
+    const { pendingGoals } = await getWeekPendingGoals()
+
+    return { pendingGoals }
   },
 })
