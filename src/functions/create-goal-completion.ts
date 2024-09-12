@@ -16,7 +16,7 @@ export async function createGoalCompletion({
   const goalsCompletionCounts = db.$with('goals_completion_count').as(
     db
       .select({
-        goalId: goalCompletions.id,
+        goalId: goalCompletions.goalId,
         completionCount: count(goalCompletions.id).as('completionCount'),
       })
       .from(goalCompletions)
